@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>
+Atmosphere Data
+</title>
+<style>
+body {
+    text-align:center;
+}
+.sensor{
+  background-color: black;
+  padding: 20px;
+  font-size: 35px;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+} 
+table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding: 20px;
+  margin: 20px;
+  margin-left:auto; 
+  margin-right:auto;
+}
+
+</style>
+</head>
+<body onload="updateValues()">
+    <div class="sensor">
+      <h2 style=" text-align: center;">Atmosphere</h2>
+	</div>
+	<table style="width:50%" bgcolor="gainsboro"  align="center">
+     <tr>
+         <th> <h3 id="temperature">Temperature : </h3> </th>
+	 </tr>
+	 <tr>
+        <th>  <h3 id="humidity">Humidity : </h3> </th>
+      </tr>
+    </table>
+<script>
+
+function updateValues() {
+    setInterval(function() {
+        getData();
+    },4000);
+}
+
+function getData() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange=function() {
+        if (this.readyState == 4 && this.status == 200) {
+        let response=JSON.parse(this.response);
+            document.getElementById("temperature").innerHTML = "Temperature : " + response.temperature;
+            document.getElementById("humidity").innerHTML = "Humidity : " + response.humidity;
+        }
+    };
+  xhttp.open("GET", "/api/getdata", true);
+  xhttp.send();
+}
+
+function putData(temp,humd){
+
+var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange=function() {
+    };
+  xhttp.open("POST", "/api/putdata", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.send(JSON.stringify({temperature:temp,humidity:humd}));
+}
+
+</script>
+</body>
+</html>
