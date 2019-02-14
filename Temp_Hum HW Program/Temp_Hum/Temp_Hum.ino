@@ -27,8 +27,8 @@
 #include <dht.h>
 
 
-const char* ssid = "TechnicalHub";
-const char* password = "Technicalhub@AEC";
+const char* ssid = "Meraki";
+const char* password = "193183183";
 const char* mqttServer = "18.232.46.180";
 const int mqttPort = 1883;
 
