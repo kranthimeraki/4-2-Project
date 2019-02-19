@@ -1,0 +1,85 @@
+
+step- 1 - phase 1 (isakmp)--> sh crypto isakmp sa
+step- 2 phase 2 (ipsec) -->> sh crypto ipsec sa
+step-3-intresting traffic (ACL)
+step-4- maping (crypto map)
+step-5-apply map on interface
+
+===================================================================
+R1
+crypto isakmp policy 10
+  encryption 3des
+  hash md5
+  group 2
+  authentication pre-share
+  exi
+  crypto isakmp key cisco address 1.1.1.2
+  crypto isakmp key juniper address 1.1.1.3
+  crypto ipsec transform-set dell esp-3des esp-md5-hmac
+  exi
+  crypto ipsec transform-set lenovo esp-aes esp-sha-hmac
+access-list 101 permit ip host 10.1.1.1 host 20.1.1.1
+access-list 101 permit ip host 1.1.1.1 host 1.1.1.2
+  access-list 102 permit ip host 10.1.1.1 host 30.1.1.1
+ crypto map irfan 110 ipsec-isakmp
+  set peer 1.1.1.2
+  set transform-set dell
+  match address 101
+  ex
+  int fa0/0
+  crypto map irfan
+  exi
+  crypto map irfan 111 ipsec-isakmp
+  set peer 1.1.1.3
+  set transform-set lenovo
+  match address 102
+----------------------------------------------------------------
+R2
+
+
+ crypto isakmp policy 10
+  encryption 3des
+  hash md5
+  group 2
+  authentication pre-share
+  exi
+  crypto isakmp key cisco address 1.1.1.1
+  crypto ipsec transform-set dell esp-3des esp-md5-hmac
+  exi
+  access-list 101 permit ip host 20.1.1.1 host 10.1.1.1
+  access-list 101 permit ip host 1.1.1.2 host 1.1.1.1
+ crypto map irfan 110 ipsec-isakmp
+  set peer 1.1.1.1
+  set transform-set dell
+  match address 101
+  int fa0/0
+  crypto map irfan
+  exi
+----------------------------------------------------------------
+R3
+ crypto isakmp policy 10
+  encryption 3des
+  hash md5
+  group 2
+  authentication pre-share
+  exi
+  crypto isakmp key juniper address 1.1.1.1
+  crypto ipsec transform-set lenovo esp-aes esp-sha-hmac
+  exi
+  access-list 102 permit ip host 30.1.1.1 host 10.1.1.1
+
+ crypto map irfan 111 ipsec-isakmp
+  set peer 1.1.1.1
+  set transform-set lenovo
+  match address 102
+  exi
+  int fa0/0
+  crypto map irfan
+
+================================================
+
+
+
+
+
+
