@@ -1,0 +1,9 @@
+yum install fail2ban
+y
+cd /etc/fail2ban
+ll
+cp jail.conf jail.local
+vim jail.conf
+in ssh ignore attempts = 2
+in ignore ip you can add
+service fail2ban start
