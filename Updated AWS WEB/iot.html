@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>
+Atmosphere Data
+</title>
+<style>
+body {
+    text-align:center;
+}
+
+#atmosphere-div {
+    display:inline-block;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em;
+    margin-left: -15em;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+}
+
+#content-div {
+    position: relative;
+    float:left;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+</style>
+</head>
+<body onload="updateValues()">
+<h2>Atmosphere</h2>
+<div id="atmosphere-div" align="center">
+<div id="content-div">
+<h3>Temperature :10</h3>
+<h3>Humidity :52 </h3>
+<h3>Raining Status :569 </h3>
+</div>
+</div>
+
+</body>
+</html>
